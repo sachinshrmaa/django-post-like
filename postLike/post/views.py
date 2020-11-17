@@ -31,18 +31,20 @@ def post_like(request, pk):
 
 
 
+
+# Post like Using Jsax and API
 class PostLikeAPIToggle(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk, format=None):
         post = get_object_or_404(BlogPost, id=pk)
-        user = request.user
-        
+        user = self.request.user
+
         liked = False
         updated = False
 
-        if user.is_authenticated():
+        if user.is_authenticated:
             if post.likes.filter(id=request.user.id).exists():
                 liked = False
                 post.likes.remove(request.user)
