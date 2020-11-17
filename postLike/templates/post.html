@@ -24,7 +24,13 @@
             <h5 class="card-title mb-1">{{obj.title}}</h5>
             <span class="text-muted"><small>{{obj.author}} - {{obj.timestamp |date:"M d, Y"}}</small></span>
             <p>{{obj.content | truncatechars:120}}</p>
-            <a class='like-btn' data-href="/p/{{obj.pk}}/like/api" data-likes='{{ obj.likes.count }}'  href='/p/{{obj.pk}}/like/api/'><small>{{obj.likes.count}} like</small></a>
+            <a class='like-btn' data-href="/p/{{obj.pk}}/like/api" data-likes='{{ obj.likes.count }}'  href='/p/{{obj.pk}}/like/api/'>{{obj.likes.count}}     
+              {% if user in obj.likes.all %}
+                unlike
+              {% else %}
+                like 
+              {% endif %}
+            </a>
         </div>
 
         {% endfor %}
@@ -52,6 +58,7 @@
        $(document).ready(function(){
           function updateText(btn, newCount, verb){
           btn.text(newCount + " " + verb)
+          btn.css.add('text-success')
       }
 
       $(".like-btn").click(function(e){
